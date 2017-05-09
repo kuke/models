@@ -206,7 +206,7 @@ def grid_lstm_net(source_dict_dim, target_dict_dim, generating=False):
         return output
 
     #########################grid lstm end
-    decoder_group_name = 'decoder_group_name'
+    decoder_group_name = 'grid_decoder_group'
     if  generating:
         '''
         predict_word_memory = paddle.layer.memory(
@@ -241,9 +241,9 @@ def grid_lstm_net(source_dict_dim, target_dict_dim, generating=False):
             input=trg_word_id,
             size=word_vec_dim,
             param_attr=paddle.attr.ParamAttr(name='_target_language_embedding'))
-        group_inputs1 = paddle.layer.StaticInputV2(
-            input=trg_embedding, is_seq=True)
-        group_inputs = [group_inputs1]
+        group_inputs = [
+            paddle.layer.StaticInputV2(input=trg_embedding, is_seq=True)
+        ]
 
         decoder_output = paddle.layer.recurrent_group(
             name=decoder_group_name, input=group_inputs, step=grid_lstm_step)
