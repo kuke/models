@@ -66,6 +66,8 @@ def grid_lstm_net(source_dict_dim, target_dict_dim, generating=False):
                 gate_act=gate_active_type,
                 inputs=lstm_inputs,
                 state=state_memory)
+            state_memory_out = paddle.layer.get_output(
+                name=name + "_" + "state", input=lstm_step, arg_name='state')
             return lstm_step
 
         input_concat_layer = paddle.layer.concat(input=inputs)
